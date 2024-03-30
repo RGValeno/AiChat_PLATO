@@ -1,22 +1,16 @@
 import os
 import sys
 import langchain_openai
-
-import constants
-
 import yaml
 
-
 from langchain_community.document_loaders import TextLoader
+from langchain_community.document_loaders import DirectoryLoader
 from langchain.indexes import VectorstoreIndexCreator
 from langchain_openai import OpenAIEmbeddings
+import warnings
 
-# from langchain_community.document_loaders import TextLoader
-# from langchain_community.document_loaders import DirectoryLoader
-# from langchain_openai import OpenAIEmbeddings
-# from langchain.llms import OpenAI
-# from langchain.chat_models import ChatOpenAI
-# from langchain.document_loaders import TextLoader
+# Filter out LangChainDeprecationWarning
+warnings.filterwarnings("ignore", category=PendingDeprecationWarning)
 
 OpenAi_CONFIG_FILE = 'auth.yaml'
 
@@ -27,13 +21,15 @@ print(type(config))
 
 OPENAI_API_KEY = config['OpenAi']['key']
 
-#os.environ["OPENAI_API_KEY"] = constants.APIKEY
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 query = sys.argv[1]
 print(query)
 
-loader = TextLoader('sample.txt')
+#loader = DirectoryLoader('../', glob="**/*.md", show_progress=True)
+#docs = loader.load()
+
+loader = TextLoader('1497.txt')
 index = VectorstoreIndexCreator().from_loaders([loader])
 
 print(index.query(query))
