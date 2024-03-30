@@ -12,12 +12,12 @@ from langchain_community.document_loaders import DirectoryLoader
 from langchain.indexes import VectorstoreIndexCreator
 from langchain_openai import OpenAIEmbeddings
 
+# Filter out LangChainDeprecationWarning
+warnings.filterwarnings("ignore", category=PendingDeprecationWarning)
+
 # Load the document
 #doc = '1497.txt'
 doc = constants.doc
-
-# Filter out LangChainDeprecationWarning
-warnings.filterwarnings("ignore", category=PendingDeprecationWarning)
 
 # Load OpenAI API key
 OpenAi_CONFIG_FILE = constants.config
@@ -26,7 +26,7 @@ OpenAi_CONFIG_FILE = constants.config
 with open(OpenAi_CONFIG_FILE, 'r') as config_file:
     config = yaml.load(config_file, Loader=yaml.Loader)
 
-print(type(config))
+# print(type(config))
 
 # Set the OpenAI API key
 OPENAI_API_KEY = config['OpenAi']['key']
