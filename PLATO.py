@@ -11,6 +11,9 @@ from langchain_community.document_loaders import TextLoader
 from langchain_community.document_loaders import DirectoryLoader
 from langchain.indexes import VectorstoreIndexCreator
 from langchain_openai import OpenAIEmbeddings
+from langchain_community.chat_models import ChatOpenAI
+#from langchain.chat_models import ChatOpenAI
+
 
 # Filter out LangChainDeprecationWarning
 warnings.filterwarnings("ignore", category=PendingDeprecationWarning)
@@ -45,4 +48,4 @@ index = VectorstoreIndexCreator().from_loaders([loader])
 #docs = loader.load()
 
 # Query the index
-print(index.query(query))
+print(index.query(query, llm=ChatOpenAI()))
